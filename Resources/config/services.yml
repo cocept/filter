@@ -1,0 +1,9 @@
+services:
+    cocept_filter.filter:
+        class: Cocept\Bundle\FilterBundle\FilterFactory
+    cocept_filter.widget:
+        class: Cocept\Bundle\FilterBundle\FilterWidget
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [setRequest, ["@request_stack"]]
