@@ -1,0 +1,9 @@
+{% spaceless %}
+	<select class="form-control filter" id="filter_{{ columnName }}" 
+		data-column-name="{{ columnName }}" data-placeholder="Filter" data-allow-clear="true">
+		<option value=""></option>
+		{% for optionValue, optionText in options %}
+			<option value="{{ optionValue }}" {% if currentFilter is not null and optionValue == currentFilter %}selected="selected"{% endif %}>{{ optionText }}</option>
+		{% endfor %}
+	</select>
+{% endspaceless %}

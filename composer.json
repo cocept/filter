@@ -1,0 +1,38 @@
+{
+    "name" : "cocept/filter",
+    "description" : "Lets you filter Doctrine queries in Symfony using a widget which sets url parameters. Plays nicely with KNP Paginator.",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Max Mumford",
+        "email" : "max@cocept.io"
+    }],
+    "keywords" : [
+        "doctrine",
+        "symfony",
+        "KNP Paginator",
+        "filter"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        "php":                      ">=5.3.3",
+        "symfony/framework-bundle": "~2.3|~2.8",
+        "twig/twig":                "~1.12|~2",
+        "symfony/assetic-bundle":   "^2.7"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Cocept\\Bundle\\FilterBundle\\" : ""
+        }
+    },
+    "repositories" : [{
+        "type" : "vcs",
+        "url" : "https://github.com/cocept/filter.git"
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "1.0.x-dev"
+        }
+    }
+}
