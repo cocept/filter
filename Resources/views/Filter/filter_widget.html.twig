@@ -1,5 +1,10 @@
 {% spaceless %}
-	<select class="form-control filter" id="filter_{{ columnName }}" 
+	{% if currentFilter is not null %}
+		{% set class = "active" %}
+	{% else %}
+		{% set class = "" %}
+	{% endif %}
+	<select class="form-control filter {{ class }}" id="filter_{{ columnName }}" 
 		data-column-name="{{ columnName }}" data-placeholder="Filter" data-allow-clear="true">
 		<option value=""></option>
 		{% for optionValue, optionText in options %}
