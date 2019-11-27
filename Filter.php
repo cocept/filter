@@ -13,7 +13,6 @@ class Filter
     public static $defaultOperator = 'ilike';
     public static $filterValuePrefix = ':filterValue';
     public static $operators = array(
-        'like',
         'ilike',
         'eq',
         'neq',
@@ -62,7 +61,7 @@ class Filter
         if( false === in_array($columnName, $this->allowedProperties) 
             && false === in_array($columnName, $this->allowedRelationals) )
         {
-            throw new HttpException(403, "Cheating are we? Can't filter by " . $columnName . "");
+            throw new HttpException(403, "Sorry, we can't filter by " . $columnName . ".");
         }
     }
 
@@ -107,8 +106,6 @@ class Filter
         switch ($operator) {
             case 'ilike':
                 return $this->_updateQueryBuilderIlike($operator, $alias, $columnName, $columnValue);
-            case 'like':
-                return $this->_updateQueryBuilderLike($operator, $alias, $columnName, $columnValue);
             case 'eq':
                 return $this->_updateQueryBuilderEq($operator, $alias, $columnName, $columnValue);
             case 'neq':
@@ -124,17 +121,6 @@ class Filter
 
         $columnValueParamKey = $this::$filterValuePrefix . $columnName; // :FilterValueCity
         $this->queryBuilder->andwhere("lower($alias.$columnName) like lower($columnValueParamKey)")
-             ->setParameter($columnValueParamKey, "%$columnValue%");
-    }
-
-    private function _updateQueryBuilderLike($operator, $alias, $columnName, $columnValue) {
-        if( in_array($columnName, $this->allowedRelationals) ) {
-            $this->_updateQueryBuilderRelationalEq($alias, $columnName, $columnValue);
-            return;
-        }
-
-        $columnValueParamKey = $this::$filterValuePrefix . $columnName; // :FilterValueCity
-        $this->queryBuilder->andwhere("$alias.$columnName like $columnValueParamKey")
              ->setParameter($columnValueParamKey, "%$columnValue%");
     }
 

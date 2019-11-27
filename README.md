@@ -2,7 +2,8 @@
 
 Cocept Filter is a bundle for Symfony and Doctrine that lets users filter datasets using a select widget.
 
-The bundle provides a service and a widget. The widget shows the user a select which when changed inserts the appropriate filter options into the URL. The filter service gets the filter options from the URL and adds where clauses to the query builder to filter the results.
+The bundle provides a service and a widget. The widget shows the user a search input or select box which when changed inserts the appropriate filter options into the URL. 
+The filter service gets the filter options from the URL and adds where clauses to the query builder to filter the results.
 
 Multiple filters can be applied, and operators can also be specified. This bundle plays nicely with KNP Paginator.
 
@@ -53,11 +54,13 @@ The fourth parameter should be an array containing a list of foreign key fields 
 In your twig template, add the following line:
 
 ```jinja
-{{ filterWidget('name', allNames) }}
+{{ filterWidget('name') }}
 {{ filterWidget('category', allCategories) }}
 ```
 
-The second parameter of the filterWidget function should be an associative array. The key is used as the select box option text and the value is used as the select box option value.
+The first parameter of the filterWidget function should be the field on which to filter.
+
+If the second parameter is omitted, the user will be shown a search field and the ilike operator will be used. Otherwise, an associative array must be provided and the user will see a select box and a button to toggle between the eq and neq operators. The array key will be used as the option label and the value as the option value.
 
 So, if you want to show the user a list of category names, the array would be something like this:
 
@@ -92,7 +95,6 @@ The widget adds URL parameters like filter_name=someval, where name is the colum
 
  - neq: !=
  - ilike: ilike
- - like: like
  - eq: =
 
 An example URL with filter parameters might be:
@@ -102,4 +104,3 @@ http://localhost:8000/post/?filter_category=5&operator_category=neq&filter_name=
 # Contributing
 
 This bundle is actively used in production and will be maintained as such. If you wish to submit a pull request it will be promptly considered and merged.
-

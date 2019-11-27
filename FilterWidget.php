@@ -21,17 +21,35 @@ class FilterWidget extends \Twig_Extension
         );
     }
 
-    public function filterWidget(\Twig_Environment $environment, $columnName, array $options){
+    public function filterWidget(\Twig_Environment $environment, string $columnName, array $options = null){
         // get current filter
         $request = $this->request;
         $currentFilter = null;
-        $paramName = "filter_" . $columnName;
-        if($request->query->has($paramName))
+        $currentOperator = null;
+
+        if($request->query->has("filter_" . $columnName)) {
             $currentFilter = $request->query->get('filter_' . $columnName);
+        }
+
+        if($request->query->has("operator_" . $columnName)) {
+            $currentOperator = $request->query->get('operator_' . $columnName);
+        }
+
+        $operatorToggleText = 'Is';
+        if ($currentOperator == 'neq') {
+            $operatorToggleText = 'Not';
+        }
         
         // render template
         return $environment->render("CoceptFilterBundle:Filter:filter_widget.html.twig", 
-            array("request" => $request, "columnName" => $columnName, "options" => $options, "currentFilter" => $currentFilter));
+            array(
+                "request" => $request, 
+                "columnName" => $columnName, 
+                "options" => $options, 
+                "operatorToggleText" => $operatorToggleText,
+                "currentFilter" => $currentFilter,
+                "currentOperator" => $currentOperator,
+            ));
     }
 
     public function getName()
