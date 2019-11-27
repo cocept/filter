@@ -5,30 +5,34 @@
 		{% set class = "" %}
 	{% endif %}
 
-	<!-- eq / neq mode -->
-	{% if options is not null and currentFilter is not null %}
-	<button class="form-control cocept-filter-operator {{ class }}"
-			data-column-name="{{ columnName }}">
-		{{ operatorToggleText }}
-	</button>
-	{% endif %}
-	{% if options is not null %}
-	<select class="form-control cocept-filter-match {{ class }}" 
-			data-column-name="{{ columnName }}" 
-			data-placeholder="Filter" 
-			data-allow-clear="true">
-		<option value=""></option>
-		{% for optionValue, optionText in options %}
-			<option value="{{ optionValue }}" {% if currentFilter is not null and optionValue == currentFilter %}selected="selected"{% endif %}>{{ optionText }}</option>
-		{% endfor %}
-	</select>
-	{% endif %}
+	<div class="cocept-filter {{ class }} {% if options is not null %}select{% else %}search{% endif %}">
 
-	<!-- search mode -->
-	{% if options is null %}
-	<input class="form-control cocept-filter-search {{ class }}"
-			data-column-name="{{ columnName }}"
-			value="{{ currentFilter}}">
-	{% endif %}
+		<!-- eq / neq mode -->
+		{% if options is not null and currentFilter is not null %}
+		<button class="form-control cocept-filter-operator {{ class }}"
+				data-column-name="{{ columnName }}">
+			{{ operatorToggleText }}
+		</button>
+		{% endif %}
+		{% if options is not null %}
+		<select class="form-control cocept-filter-match {{ class }}" 
+				data-column-name="{{ columnName }}" 
+				data-placeholder="Filter" 
+				data-allow-clear="true">
+			<option value=""></option>
+			{% for optionValue, optionText in options %}
+				<option value="{{ optionValue }}" {% if currentFilter is not null and optionValue == currentFilter %}selected="selected"{% endif %}>{{ optionText }}</option>
+			{% endfor %}
+		</select>
+		{% endif %}
+
+		<!-- search mode -->
+		{% if options is null %}
+		<input class="form-control cocept-filter-search {{ class }}"
+				data-column-name="{{ columnName }}"
+				value="{{ currentFilter}}">
+		{% endif %}
+
+	</div>
 
 {% endspaceless %}
